@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Logger</title>
+</head>
+<body>
+    <button id="sendIpBtn">Send IP</button>
+    
+    <script>
+        document.getElementById('sendIpBtn').addEventListener('click', () => {
+            fetch('https://api.ipify.org?format=json')
+                .then(response => response.json())
+                .then(data => {
+                    const ip = data.ip;
+                    sendToWebhook(ip);
+                })
+                .catch(error => console.error('Error fetching IP:', error));
+        });
+
+        function sendToWebhook(ip) {
+            const webhookUrl = 'https://discord.com/api/webhooks/1286431414010642527/J1GrvAUXb343h0cUsonj4sTQqWqCCxTWjoEtTxGXMsPiwFYNoafYpXmMBKnZulV2fNPt';
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ content: `IP: ${ip}` })
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Webhook sent successfully!');
+                } else {
+                    console.error('Error sending webhook:', response.statusText);
+                }
+            })
+            .catch(error => console.error('Error sending webhook:', error));
+        }
+    </script>
+</body>
+</html>
