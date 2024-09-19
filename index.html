@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Lien</title>
+</head>
+<body>
+    <h1>Cliquez pour générer le lien</h1>
+    <button id="generate-link">Générer le lien</button>
+    <p id="link-container"></p>
+
+    <script>
+        document.getElementById('generate-link').onclick = function() {
+            const uniqueId = Date.now();
+            const link = `ip.html?id=${uniqueId}`;
+            document.getElementById('link-container').innerHTML = `<a href="${link}" target="_blank">${link}</a>`;
+        };
+    </script>
+</body>
+</html>
